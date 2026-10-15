@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Decision Lab — Eksperimen Percobaan</title>
+<style>
+:root{color-scheme:dark;--bg:#090d18;--card:#111a2b;--line:#293750;--text:#f2f5ff;--muted:#9aa8c4;--purple:#a99bff;--lime:#c8ff78}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;padding:22px;background:radial-gradient(circle at 80% 15%,#27224e 0,transparent 32%),var(--bg);font-family:Inter,ui-sans-serif,system-ui,sans-serif;color:var(--text)}
+main{width:min(680px,100%)}.label{color:var(--lime);font-size:.76rem;letter-spacing:.17em;font-weight:800}.label:before{content:"●";margin-right:9px}
+h1{font-size:clamp(2.5rem,8vw,4.5rem);letter-spacing:-.065em;line-height:.98;margin:16px 0}h1 span{color:var(--purple)}p{color:var(--muted);line-height:1.65}
+.card{margin-top:28px;padding:clamp(18px,4vw,30px);border:1px solid var(--line);border-radius:24px;background:#111a2be8;box-shadow:0 25px 80px #0005}
+label{display:block;margin:0 0 10px;font-size:.9rem;font-weight:700}textarea{width:100%;min-height:105px;resize:vertical;padding:14px;border:1px solid var(--line);border-radius:13px;background:#090f1c;color:var(--text);font:inherit;line-height:1.6;outline:none}textarea:focus{border-color:var(--purple)}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}button{border:0;border-radius:12px;padding:12px 17px;font:inherit;font-weight:800;cursor:pointer}#choose{background:var(--lime);color:#111827}#clear{background:#202b40;color:var(--text)}button:hover{filter:brightness(1.08)}
+.result{display:grid;place-items:center;text-align:center;min-height:125px;margin-top:20px;padding:20px;border:1px dashed #4b5579;border-radius:16px;background:#0c1322}.result small{color:var(--muted);letter-spacing:.1em;text-transform:uppercase}.result strong{display:block;margin-top:8px;font-size:clamp(1.3rem,5vw,2rem);overflow-wrap:anywhere}.foot{font-size:.78rem;display:flex;justify-content:space-between;gap:12px;margin-top:20px;color:var(--muted);flex-wrap:wrap}
+</style>
+</head>
+<body>
+<main>
+<div class="label">EXPERIMENT 002 / DECISION LAB</div>
+<h1>Stop overthinking.<br><span>Pick one.</span></h1>
+<p>Masukkan beberapa pilihan, pisahkan dengan baris baru, lalu biarkan eksperimen kecil ini memilih satu secara acak. Cocok buat menentukan proyek berikutnya—atau makan apa. 🧪</p>
+<section class="card">
+<label for="options">Pilihan kamu (satu pilihan per baris)</label>
+<textarea id="options" placeholder="Belajar Python\nBikin mini game\nEksperimen API"></textarea>
+<div class="actions"><button id="choose" type="button">🎲 Pilihkan untuk saya</button><button id="clear" type="button">Reset</button></div>
+<div class="result" aria-live="polite"><small id="caption">HASIL EKSPERIMEN</small><strong id="result">Menunggu pilihan…</strong></div>
+</section>
+<div class="foot"><span>Local-only · Tidak mengirim data ke server</span><span>HTML / CSS / JS</span></div>
+</main>
+<script>
+const input=document.querySelector("#options"),result=document.querySelector("#result"),caption=document.querySelector("#caption");
+document.querySelector("#choose").addEventListener("click",()=>{
+ const choices=input.value.split("\n").map(x=>x.trim()).filter(Boolean);
+ if(choices.length<2){caption.textContent="BUTUH MINIMAL DUA PILIHAN";result.textContent="Tambahkan pilihan dulu 🙂";return}
+ const pick=choices[Math.floor(Math.random()*choices.length)];
+ caption.textContent="HASIL EKSPERIMEN · "+choices.length+" PILIHAN";result.textContent=pick;
+});
+document.querySelector("#clear").addEventListener("click",()=>{input.value="";caption.textContent="HASIL EKSPERIMEN";result.textContent="Menunggu pilihan…";input.focus()});
+</script>
+</body>
+</html>
